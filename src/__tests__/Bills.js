@@ -16,17 +16,17 @@ describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
     let billsInstance;
     beforeEach(() => {
-      // Simuler `localStorage` et autres dépendances si nécessaire
+
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({ type: 'Employee' }));
 
-      // Création d'une instance de Bills avec des dépendances simulées
+
       billsInstance = new Bills({
         document,
         onNavigate: () => { },
         store: {
           bills: () => ({
-            list: () => Promise.resolve(bills) // Utiliser vos fixtures ou une simulation ici
+            list: () => Promise.resolve(bills)
           })
         },
         localStorage: window.localStorage
@@ -60,7 +60,7 @@ describe("Given I am connected as an employee", () => {
       await billsInstance.getBills();
       expect(getSpy).toHaveBeenCalled();
       expect(await billsInstance.store.bills().list()).toEqual(bills);
-      getSpy.mockRestore(); // Restaurer l'original après le test pour éviter des effets de bord
+      getSpy.mockRestore();
     });
   });
 });

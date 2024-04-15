@@ -75,13 +75,11 @@ describe("When I am on NewBill Page", () => {
 
       const newBillInstance = new NewBill({ document, onNavigate, store: mockStore, localStorage: window.localStorage });
 
-      // Espionner sur handleChangeFile directement sans créer une nouvelle fonction
       const handleChangeFileSpy = jest.spyOn(newBillInstance, "handleChangeFile");
 
       const fileInput = screen.getByTestId("file");
       const file = new File(["content"], "goodfile.jpg", { type: "image/jpg" });
 
-      // Déclencher l'événement de changement avec le fichier simulé
       fireEvent.change(fileInput, { target: { files: [file] } });
 
 
