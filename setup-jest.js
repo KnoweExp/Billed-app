@@ -1,2 +1,2 @@
-import $ from 'jquery';
+const $ = require('jquery');
 global.$ = global.jQuery = $;

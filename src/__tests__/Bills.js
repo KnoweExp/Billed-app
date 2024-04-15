@@ -59,6 +59,7 @@ describe("Given I am connected as an employee", () => {
 
       await billsInstance.getBills();
       expect(getSpy).toHaveBeenCalled();
+      expect(await billsInstance.store.bills().list()).toEqual(bills);
       getSpy.mockRestore(); // Restaurer l'original après le test pour éviter des effets de bord
     });
   });

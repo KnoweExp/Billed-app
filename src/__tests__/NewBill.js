@@ -8,8 +8,12 @@ import NewBill from "../containers/NewBill.js"
 import { ROUTES, ROUTES_PATH } from "../constants/routes"
 import Bills from '../containers/Bills.js';
 import { localStorageMock } from "../__mocks__/localStorage.js";
-import mockStore from "../__mocks__/store.js"
 import router from "../app/Router.js"
+import mockStore from "../__mocks__/store.js"
+
+import Store from '../app/Store';
+
+
 
 
 describe("Given I am connected as an employee", () => {
@@ -54,7 +58,6 @@ describe("When I am on NewBill Page", () => {
     const iconActivated = windowIcon.classList.contains('active-icon')
     expect(iconActivated).toBeTruthy()
   })
-
 
   describe("When I upload a file", () => {
     beforeEach(() => {
@@ -136,6 +139,26 @@ describe("When I submit the form with all required fields filled", () => {
       preventDefault: jest.fn(),
       target: document.querySelector(`form[data-testid="form-new-bill"]`)
     };
+  });
+
+  describe("NewBill POST API", () => {
+    beforeEach(() => {
+      Store.bills = jest.fn().mockReturnValue({
+        create: jest.fn()
+      });
+    });
+    it("should post new bill data correctly", async () => {
+      const mockPost = jest.fn().mockResolvedValue({
+        id: "1234",
+      });
+
+      Store.bills().create = mockPost;
+
+      const result = await Store.bills().create();
+
+      expect(mockPost).toHaveBeenCalled();
+      expect(result.id).toEqual("1234");
+    });
   });
 
   test("Then it should call handleSubmit", () => {
